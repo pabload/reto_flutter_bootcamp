@@ -15,10 +15,9 @@ class _FormPageState extends State<FormPage> {
   String _calories = "";
   AppBar _appbar() {
     return AppBar(
-      title: Text('Example 2'),
+      title: Text('Form page'),
     );
   }
-
   Widget _inputName() {
     return Container(
       child: TextFormField(
@@ -90,12 +89,13 @@ class _FormPageState extends State<FormPage> {
 
   Widget _fabSaveFood() {
     return FloatingActionButton.extended(
+      heroTag: 1,
       onPressed: _saveData,
       label: Text('Save food'),
       icon: Icon(Icons.plus_one_outlined),
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,10 +107,11 @@ class _FormPageState extends State<FormPage> {
 
   void _saveData() async {
     final FormState? _formState = _formKey.currentState;
-    if (_formState != null && _formState.validate()) {
+    if (_formState != null ) {
       _formState.save();
       try {
-        Food _food = Food(name: _name, calories: double.parse(_calories));
+        Food _food = Food(
+            idServer: null, name: _name, calories: double.parse(_calories));
         await _insertData(_food);
         snackMessage(message: 'data saved', context: context);
         Navigator.of(context).pop();
@@ -119,7 +120,6 @@ class _FormPageState extends State<FormPage> {
             message: '${error.toString()}', context: context, isError: true);
       }
     } else {
-      print(_formState!.validate());
       snackMessage(
           message: 'Issue inside the form', context: context, isError: true);
     }

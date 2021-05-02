@@ -1,9 +1,23 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
 class Api {
   static final String mainUrl = "http://192.168.1.44:8000/foods/";
+
+
+  //Method with simulation
+   static Future<int> addFoodToSimulationAServer(
+      {required String name, required double calories}) async {
+    Map<String, dynamic> _jsonFood = {"name": name, "calories": calories};
+    int serverId = Random().nextInt(100);
+    await Future.delayed(Duration(seconds: 1));
+    return serverId;
+    
+  }
+
+  //Method with a real server 
   static Future<bool> addFoodToServer(
       {required String name, required double calories}) async {
     Map<String, dynamic> _jsonFood = {"name": name, "calories": calories};

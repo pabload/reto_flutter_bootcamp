@@ -22,6 +22,8 @@ class DatabaseHelper {
     await db.execute("PRAGMA foreign_keys=ON");
   }
   void _onCreateDB(Database db, int versionDB) async{
-    await db.execute("CREATE TABLE IF NOT EXISTS foods(name Text, calories Real);");
+    await db.execute("CREATE TABLE IF NOT EXISTS foods(idLocal INTEGER PRIMARY KEY, idServer Number ,name Text, calories Real);");
   }
+  static Future<void> deleteDatabase(String path) =>
+    databaseFactory.deleteDatabase(path);
 }
